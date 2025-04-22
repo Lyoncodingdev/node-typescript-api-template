@@ -11,3 +11,11 @@ Follows the service, controller, repository format to provide layered levels of 
 Adding the following features
 - Authentication and middleware
 - Unit testing
+
+# Setup
+### Prerequisites
+- Npm
+
+### Database Models
+- Add model definitions to schema.prisma
+- Run ```npx prisma generate```
