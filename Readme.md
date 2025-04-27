@@ -14,7 +14,19 @@ Adding the following features
 
 # Setup
 ### Prerequisites
-- Npm
+- yarn
+
+### Starting
+- clone repository
+- ```yarn install```
+- Create a .env file
+- Add necessary variables - see section below.
+- Start server ```yarn start```
+
+### Environment Variables
+- **Required**
+- DATABASE_CONNECTION={your connection string}
+- PORT={your desired port}
 
 ### Database Models
 - Add model definitions to schema.prisma
