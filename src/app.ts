@@ -1,8 +1,10 @@
 import express, { Express } from 'express';
-import { IDatabaseContext } from './db/IDatabaseContext';
+import { IDatabaseConnection } from './db/IDatabaseConnection';
 import { ILogger } from './util/ILogger';
 import { ConsoleLogger } from './util/ConsoleLogger';
 import rateLimit from 'express-rate-limit';
+import { DatabaseConnection } from './db/DatabaseConnection';
+import { UserService } from './service/UserService';
 
 /**
  * Interface to define app functionality.
@@ -14,10 +16,13 @@ interface IApp {
 class App implements IApp {
     private server: Express;
     private logger: ILogger;
+    private databaseConnection: IDatabaseConnection;
+    private userService: UserService;
 
     constructor() {
         this.server = express();
         this.logger = new ConsoleLogger();
+        this.databaseConnection = new DatabaseConnection(this.logger);
     }
 
     private configureMiddlewear(): void {
@@ -42,7 +47,10 @@ class App implements IApp {
     }
 
     private initializeServices(): void {
-        this.logger.info("Services initialized.")
+        this.databaseConnection.initializeConnection();
+
+        this.logger.info("Services initialized.");
+        this.userService = new UserService(this.databaseConnection, this.logger);
     }
 
     public start(): void {

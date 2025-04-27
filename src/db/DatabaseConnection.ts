@@ -1,12 +1,16 @@
 import { PrismaClient } from '@prisma/client';
-import { IDatabaseContext } from './IDatabaseContext';
+import { IDatabaseConnection } from './IDatabaseConnection';
 import { ILogger } from '../util/ILogger';
 
-export class DatabaseContext implements IDatabaseContext {
+/**
+ * Database connection object for accessing data.
+ */
+export class DatabaseConnection implements IDatabaseConnection {
     private prisma: PrismaClient;
     private logger: ILogger;
 
-    constructor() {
+    constructor(logger: ILogger) {
+        this.logger = logger;
         this.prisma = new PrismaClient();
     }
 

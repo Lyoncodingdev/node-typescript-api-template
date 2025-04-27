@@ -1,26 +1,24 @@
 import { User } from "../../generated/prisma";
-import { DatabaseContext } from "../db/DatabaseContext";
+import { BaseRepository } from "./BaseRepository";
 
 /**
  * Class for accessing users from the database.
  */
-export class UserRepository {
-    constructor(private dbContext: DatabaseContext) {}
-
+export class UserRepository extends BaseRepository {
     async findByEmail(email: string): Promise<User | null> {
-        return this.dbContext.getConnection().user.findUnique({
+        return this.dbConnection.getConnection().user.findUnique({
             where: { email },
         });
     }
 
     async createUser(name: string, email: string): Promise<User> {
-        return this.dbContext.getConnection().user.create({
+        return this.dbConnection.getConnection().user.create({
             data: { name, email },
         });
     }
 
     async deleteUser(userId: number): Promise<void> {
-        await this.dbContext.getConnection().user.delete({
+        await this.dbConnection.getConnection().user.delete({
             where: { id: userId },
         });
     }

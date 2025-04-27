@@ -1,6 +1,6 @@
 import { User } from "../../generated/prisma";
 
-export class UserDTO {
+export class UserRequest {
     id: number;
     email: string;
     name?: string;
@@ -10,11 +10,11 @@ export class UserDTO {
         this.name = name;
     }
 
-    public static fromUser(user: User): UserDTO {
-        return new UserDTO(user.id, user.email, user.name);
+    public static fromUser(user: User): UserRequest {
+        return new UserRequest(user.id, user.email, user.name);
     }
 
     public static emptyUser(){
-        return new UserDTO(-1, "", "");
+        return new UserRequest(-1, "", "");
     }
 };

@@ -1,5 +1,5 @@
 import { User } from "../../generated/prisma";
-import { UserDTO } from "../../src/model/UserDTO";
+import { UserRequest } from "../../src/model/UserRequest";
 import { UserRepository } from "../../src/repository/UserRepository";
 import { UserService } from "../../src/service/UserService";
 
@@ -24,7 +24,7 @@ describe('UserService', () => {
             name: 'John',
             email: 'john@example.com',
         }
-        const expectedUserDTO = UserDTO.fromUser(fakeUser);
+        const expectedUserDTO = UserRequest.fromUser(fakeUser);
         mockUserRepo.findByEmail.mockResolvedValue(fakeUser);
 
         var actualUser = await userService.getUserByEmail(fakeUser.email);
@@ -33,14 +33,14 @@ describe('UserService', () => {
     })
 
     it('GetUserNoEmail', async () => {
-        const emptyUserDTO = UserDTO.emptyUser();
+        const emptyUserDTO = UserRequest.emptyUser();
         var actualUser = await userService.getUserByEmail("NoEmail");
         expect(actualUser).toEqual(emptyUserDTO);
         expect(mockUserRepo.findByEmail).toHaveBeenCalledWith("NoEmail");
     })
 
     it('CreateValidUser', async () => {
-        var userDTO = new UserDTO(-1, "James", "White");
+        var userDTO = new UserRequest(-1, "James", "White");
         
     })
 });

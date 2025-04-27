@@ -1,27 +1,31 @@
-import { UserDTO } from "../model/UserDTO";
+import { IDatabaseConnection } from "../db/IDatabaseConnection";
+import { UserRequest } from "../model/UserRequest";
 import { UserRepository } from "../repository/UserRepository";
+import { ILogger } from "../util/ILogger";
 
 
 export class UserService {
     userRepo: UserRepository;
+    logger: ILogger;
 
-    constructor(userRepo: UserRepository){
-        this.userRepo = userRepo;
+    constructor(dbConnection: IDatabaseConnection, logger: ILogger){
+        this.userRepo = new UserRepository(dbConnection, logger);
+        this.logger = logger;
     }
 
-    async getUserByEmail(email: string): Promise<UserDTO> {
+    async getUserByEmail(email: string): Promise<UserRequest> {
         var user = await this.userRepo.findByEmail(email);
         if (user){
-            return UserDTO.fromUser(user);
+            return UserRequest.fromUser(user);
         } else {
-            return new UserDTO(-1, "", "");
+            return new UserRequest(-1, "", "");
         }
     }
 
-    async createUser(user: UserDTO){
+    async createUser(user: UserRequest){
         var newUser = await this.userRepo.createUser(user.name, user.email);
         if (newUser){
-            return UserDTO.fromUser(newUser);
+            return UserRequest.fromUser(newUser);
         }
     };
 };
