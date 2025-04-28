@@ -5,6 +5,7 @@ import { ConsoleLogger } from './util/ConsoleLogger';
 import rateLimit from 'express-rate-limit';
 import { DatabaseConnection } from './db/DatabaseConnection';
 import { UserService } from './service/UserService';
+import { UserRepository } from './repository/UserRepository';
 
 /**
  * Interface to define app functionality.
@@ -17,8 +18,8 @@ class App implements IApp {
     private server: Express;
     private logger: ILogger;
     private databaseConnection: IDatabaseConnection;
+    private userRepo: UserRepository;
     private userService: UserService;
-
     constructor() {
         this.server = express();
         this.logger = new ConsoleLogger();
@@ -46,11 +47,16 @@ class App implements IApp {
         // Add logging to each request.
     }
 
-    private initializeServices(): void {
-        this.databaseConnection.initializeConnection();
+    private initializeRepos(): void {
+        this.databaseConnection.testConnection();
+        this.userRepo = new UserRepository(this.databaseConnection, this.logger);
 
+    }
+
+    private initializeServices(): void {
+        this.databaseConnection.testConnection();
         this.logger.info("Services initialized.");
-        this.userService = new UserService(this.databaseConnection, this.logger);
+        this.userService = new UserService(this.userRepo, this.logger);
     }
 
     public start(): void {

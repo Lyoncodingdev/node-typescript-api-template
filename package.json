@@ -4,10 +4,11 @@
   "description": "template for node typescript api.",
   "main": "src/app.ts",
   "scripts": {
-    "build": "npx tsc",
-    "start": "yarn run build && yarn node dist/src/app.js",
+    "build": "npx prisma generate && npx tsc",
+    "start": "npx prisma generate && yarn run build && yarn node dist/src/app.js",
     "lint": "eslint . --ext .ts",
-    "test": "jest"
+    "test": "jest",
+    "clean": "rm -rf dist && rm -rf generated && rm -rf node_modules"
   },
   "author": "Raymond Lyon",
   "license": "ISC",

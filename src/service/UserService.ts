@@ -8,8 +8,8 @@ export class UserService {
     userRepo: UserRepository;
     logger: ILogger;
 
-    constructor(dbConnection: IDatabaseConnection, logger: ILogger){
-        this.userRepo = new UserRepository(dbConnection, logger);
+    constructor(userRepo: UserRepository, logger: ILogger){
+        this.userRepo = userRepo;
         this.logger = logger;
     }
 

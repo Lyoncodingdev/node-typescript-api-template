@@ -15,13 +15,6 @@ export class DatabaseConnection implements IDatabaseConnection {
     }
 
     /**
-     * Initializes the database connection.
-     */
-    initializeConnection(): void {
-        this.logger.info('Prisma client initialized.');
-    }
-
-    /**
      * Tests the connection to the database.
      * @returns True or false depending on if connection was success.
      */

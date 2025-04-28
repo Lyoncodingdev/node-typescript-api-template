@@ -31,3 +31,12 @@ Adding the following features
 ### Database Models
 - Add model definitions to schema.prisma
 - Run ```npx prisma generate```
+
+### Database Migrations
+- Place connection URL in the .env and run command ```npx prisma migrate dev --name init```
+- Future migrations, first regenerate models if needed
+- Run command ```npx prisma migrate dev --name {migration name}```
+- Deploying to prod, use command ```npx prisma migrate deploy```
+
+### Forcing Migrations to DB
+- ```npx prisma db push```

@@ -18,6 +18,12 @@ describe('UserRepository', () => {
             delete: jest.fn(),
         },
     } as unknown as PrismaClient;
+
+    const mockLogger = {
+        info: jest.fn(),
+        warning: jest.fn(),
+        error: jest.fn()
+    }
     
     /**
      * Mocks the database getConnection.
@@ -27,7 +33,7 @@ describe('UserRepository', () => {
     };
 
     beforeEach(() => {
-        repo = new UserRepository(mockDbContext as any);
+        repo = new UserRepository(mockDbContext as any, mockLogger as any);
     });
 
     it('should find a user by email', async () => {

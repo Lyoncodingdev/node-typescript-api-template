@@ -1,7 +1,7 @@
 import { User } from "../../generated/prisma";
 import { UserRequest } from "../../src/model/UserRequest";
-import { UserRepository } from "../../src/repository/UserRepository";
 import { UserService } from "../../src/service/UserService";
+import { ILogger } from "../../src/util/ILogger";
 
 describe('UserService', () => {
     let userService: UserService;
@@ -11,10 +11,17 @@ describe('UserService', () => {
         deleteUser: jest.fn()
     };
 
+    const mockLogger = {
+        info: jest.fn(),
+        warning: jest.fn(),
+        error: jest.fn()
+    }
+
     beforeEach(() => {
         jest.resetAllMocks();
         jest.clearAllMocks();
-        userService = new UserService(mockUserRepo as any);
+
+        userService = new UserService(mockUserRepo as any, mockLogger as any);
     });
 
     it('GetUserValidEmail', async () => {
