@@ -25,7 +25,7 @@ Adding the following features
 
 ### Environment Variables
 - **Required**
-- DATABASE_CONNECTION={your connection string}
+- DATABASE_URL={your connection string}
 - PORT={your desired port}
 
 ### Database Models
