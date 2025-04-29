@@ -1,69 +1,33 @@
-import express, { Express } from 'express';
-import { IDatabaseConnection } from './db/IDatabaseConnection';
+import { Express } from 'express';
 import { ILogger } from './util/ILogger';
 import { ConsoleLogger } from './util/ConsoleLogger';
-import rateLimit from 'express-rate-limit';
-import { DatabaseConnection } from './db/DatabaseConnection';
-import { UserService } from './service/UserService';
-import { UserRepository } from './repository/UserRepository';
+import { AppBuilder } from './AppBuilder';
 
 /**
  * Interface to define app functionality.
  */
-interface IApp {
+export interface IApp {
     start(): void;
 };
 
-class App implements IApp {
+export class App implements IApp {
     private server: Express;
     private logger: ILogger;
-    private databaseConnection: IDatabaseConnection;
-    private userRepo: UserRepository;
-    private userService: UserService;
-    constructor() {
-        this.server = express();
-        this.logger = new ConsoleLogger();
-        this.databaseConnection = new DatabaseConnection(this.logger);
+
+    /**
+     * Constructor for making an app.
+     * @param builder AppBuilder used to build the instance.
+     */
+    constructor(builder: AppBuilder) {
+        this.server = builder.getServer();
+        this.logger = builder.getLogger();
     }
 
-    private configureMiddlewear(): void {
-
-        // Limit the request sizes
-        this.server.use(express.json({limit: '1mb'}));
-
-        // Rate limiting
-        const limiter = rateLimit({
-            windowMs: 15 * 60 * 1000,
-            max: 100,
-            standardHeaders: true,
-            legacyHeaders: false,
-            message: 'Too many requests from this IP, please try again after 15 minutes'
-        });
-        this.server.use(limiter);
-
-        // Remove certain headers
-        this.server.disable('x-powered-by');
-
-        // Add logging to each request.
-    }
-
-    private initializeRepos(): void {
-        this.databaseConnection.testConnection();
-        this.userRepo = new UserRepository(this.databaseConnection, this.logger);
-
-    }
-
-    private initializeServices(): void {
-        this.databaseConnection.testConnection();
-        this.logger.info("Services initialized.");
-        this.userService = new UserService(this.userRepo, this.logger);
-    }
-
+    /**
+     * Function for starting the app.
+     */
     public start(): void {
         const port = 3000;
-        this.configureMiddlewear();
-        this.initializeServices();
-
         this.server.listen(port, () => {
             this.logger.info(`Express is listening at http://localhost:${port}`);
         });
@@ -71,6 +35,13 @@ class App implements IApp {
 };
 
 
-const app = new App();
+const app = new AppBuilder()
+    .withLogger(new ConsoleLogger)
+    .withMiddleware()
+    .withDatabase()
+    .withUserRepository()
+    .withUserService()
+    .build();
+
 app.start();
 
