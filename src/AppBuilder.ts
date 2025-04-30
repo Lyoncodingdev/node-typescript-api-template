@@ -115,20 +115,7 @@ export class AppBuilder {
      * @returns App
      */
     public build(): App {
-        if (!this.logger) {
-            throw new Error("Logger not configured. Did you forget withLogger()?");
-        }
-        if (!this.db) {
-            throw new Error("Database not configured. Did you forget withDatabase()?");
-        }
-        if (!this.userRepo) {
-            throw new Error("Repository not configured. Did you forget withUserRepository()?");
-        }
-        if (!this.userService) {
-            throw new Error("Service not configured. Did you forget withUserService()?");
-        }
         this.db.testConnection();
-
         return new App(this)
     }
 }
