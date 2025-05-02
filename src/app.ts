@@ -27,7 +27,7 @@ export class App implements IApp {
      * Function for starting the app.
      */
     public start(): void {
-        const port = 3000;
+        const port = 3002;
         this.server.listen(port, () => {
             this.logger.info(`Express is listening at http://localhost:${port}`);
         });
@@ -41,6 +41,7 @@ const app = new AppBuilder()
     .withDatabase()
     .withUserRepository()
     .withUserService()
+    .withController()
     .build();
 
 app.start();

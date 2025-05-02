@@ -2,6 +2,8 @@
 import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 import { App } from './app';
+import 'reflect-metadata';
+import { useExpressServer } from 'routing-controllers';
 
 import { IDatabaseConnection } from './db/IDatabaseConnection';
 import { DatabaseConnection } from './db/DatabaseConnection';
@@ -9,6 +11,8 @@ import { ILogger } from './util/ILogger';
 
 import { UserRepository } from './repository/UserRepository';
 import { UserService } from './service/UserService';
+
+import { UserController } from './controller/UserController';
 
 export class AppBuilder {
     private server: Express;
@@ -83,6 +87,17 @@ export class AppBuilder {
         this.server.use(limiter);
         // hide Express header
         this.server.disable('x-powered-by');
+        return this;
+    }
+
+    /**
+     * Maps the controllers to the server.
+     * @returns this.
+     */
+    public withController(): AppBuilder {
+        useExpressServer(this.server, {
+            controllers: [UserController],
+        });
         return this;
     }
 
