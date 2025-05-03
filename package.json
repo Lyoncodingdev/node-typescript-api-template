@@ -5,10 +5,10 @@
   "main": "src/app.ts",
   "scripts": {
     "build": "npx prisma generate && npx tsc",
-    "start": "npx prisma generate && yarn run build && yarn node dist/src/app.js",
+    "start": "yarn node dist/src/app.js",
     "lint": "eslint . --ext .ts",
     "test": "jest",
-    "clean": "rm -rf dist && rm -rf generated && rm -rf node_modules"
+    "clean": "rm -rf dist && rm -rf generated"
   },
   "author": "Raymond Lyon",
   "license": "ISC",
@@ -31,6 +31,8 @@
     "express": "^4.17.1",
     "express-rate-limit": "^7.5.0",
     "reflect-metadata": "^0.2.2",
-    "routing-controllers": "^0.11.2"
+    "routing-controllers": "^0.11.2",
+    "typedi": "^0.10.0",
+    "uuid": "^11.1.0"
   }
 }

@@ -27,7 +27,7 @@ describe('UserService', () => {
     it('GetUserValidEmail', async () => {
         // Make the fake user
         const fakeUser: User = {
-            id: 1,
+            id: "fakeID",
             name: 'John',
             email: 'john@example.com',
         }
@@ -47,7 +47,7 @@ describe('UserService', () => {
     })
 
     it('CreateValidUser', async () => {
-        var userDTO = new UserRequest(-1, "James", "White");
+        var userDTO = new UserRequest("", "James", "White");
         
     })
 });

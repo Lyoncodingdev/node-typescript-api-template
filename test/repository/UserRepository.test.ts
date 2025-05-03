@@ -38,7 +38,7 @@ describe('UserRepository', () => {
 
     it('should find a user by email', async () => {
         const fakeUser: User = {
-            id: 1,
+            id: "newUser",
             name: 'John',
             email: 'john@example.com',
         };
@@ -54,17 +54,16 @@ describe('UserRepository', () => {
 
     it('should create a user', async () => {
         const fakeUser: User = {
-            id: 2,
+            id: "newUser",
             name: 'Jane',
             email: 'jane@example.com',
         };
 
         mockPrisma.user.create = jest.fn().mockResolvedValue(fakeUser);
-
-        const result = await repo.createUser('Jane', 'jane@example.com');
+        const result = await repo.createUser(fakeUser);
         expect(result).toEqual(fakeUser);
         expect(mockPrisma.user.create).toHaveBeenCalledWith({
-            data: { name: 'Jane', email: 'jane@example.com' },
+            data: fakeUser,
         });
     });
 });
