@@ -1,29 +1,23 @@
 import { UserRequest } from "../model/UserRequest";
 import { UserRepository } from "../repository/UserRepository";
-import { ILogger } from "../util/ILogger";
+import { ILogger, LoggerToken } from "../util/ILogger";
+import { Inject, Service } from 'typedi';
 
 /**
  * Class for interacting with users.
  */
+@Service()
 export class UserService {
-    /**
-     * User repository for data access.
-     */
-    userRepo: UserRepository;
-
-    /**
-     * Logger for logging.
-     */
-    logger: ILogger;
-
+    
     /**
      * Constructor
      * @param userRepo User repository object to use.
      * @param logger Logger to use.
      */
-    constructor(userRepo: UserRepository, logger: ILogger){
-        this.userRepo = userRepo;
-        this.logger = logger;
+    constructor(
+        @Inject(LoggerToken) private logger: ILogger,
+        @Inject(() => UserRepository) private userRepo: UserRepository
+    ){
     }
 
     /**

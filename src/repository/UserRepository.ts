@@ -1,10 +1,19 @@
 import { User } from "../../generated/prisma";
-import { BaseRepository } from "./BaseRepository";
+import { Inject, Service } from 'typedi';
+import { ILogger, LoggerToken } from "../util/ILogger";
+import { DatabaseConnection } from "../db/DatabaseConnection";
+import { IDatabaseConnection } from "../db/IDatabaseConnection";
 
 /**
  * Class for accessing users from the database.
  */
-export class UserRepository extends BaseRepository {
+@Service()
+export class UserRepository {
+
+    constructor(
+        @Inject(LoggerToken) private logger: ILogger,
+        @Inject(() => DatabaseConnection) private dbConnection: IDatabaseConnection
+    ) {}
 
     /**
      * Finds a user by their email.

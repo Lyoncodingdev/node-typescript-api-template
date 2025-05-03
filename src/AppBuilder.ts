@@ -3,18 +3,16 @@ import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 import { App } from './app';
 import 'reflect-metadata';
+import { Container } from 'typedi';
 import { useExpressServer, useContainer as rcUseContainer } from 'routing-controllers';
 
 import { IDatabaseConnection } from './db/IDatabaseConnection';
 import { DatabaseConnection } from './db/DatabaseConnection';
 import { ILogger, LoggerToken } from './util/ILogger';
 
-import { UserRepository } from './repository/UserRepository';
-import { UserService } from './service/UserService';
-
 import { UserController } from './controller/UserController';
 
-import { Container } from 'typedi';
+
 
 export class AppBuilder {
     private server: Express;
@@ -40,34 +38,6 @@ export class AppBuilder {
     public withDatabase(): AppBuilder {
         this.logger.info("Generating database connection.");
         Container.set(DatabaseConnection, new DatabaseConnection(this.logger));
-        return this;
-    }
-
-    /**
-     * Adds user repo to the application.
-     * @returns this
-     */
-    public withUserRepository(): AppBuilder {
-        let db = Container.get(DatabaseConnection);
-        if (!db){
-            this.logger.error("Could not find database connection.");
-        }
-        Container.set(UserRepository, new UserRepository(db, this.logger));
-        this.logger.info("Generated repositories.");
-        return this;
-    }
-
-    /**
-     * Adds user service to the application.
-     * @returns this
-     */
-    public withUserService(): AppBuilder {
-        let userRepo = Container.get(UserRepository);
-        if (!userRepo) {
-            this.logger.error("withUserService() called before withUserRepository()");
-        }
-        Container.set(UserService, new UserService(userRepo, this.logger))
-        this.logger.info("Generated services.");
         return this;
     }
 

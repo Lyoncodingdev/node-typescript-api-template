@@ -39,8 +39,6 @@ const app = new AppBuilder()
     .withLogger(new ConsoleLogger)
     .withMiddleware()
     .withDatabase()
-    .withUserRepository()
-    .withUserService()
     .withController()
     .build();
 
