@@ -17,12 +17,12 @@ export class UserRepository {
 
     /**
      * Finds a user by their email.
-     * @param email The email to search for.
+     * @param id The email to search for.
      * @returns The user if found.
      */
-    async findByEmail(email: string): Promise<User> {
+    async findById(id: string): Promise<User> {
         return this.dbConnection.getConnection().user.findUnique({
-            where: { email },
+            where: { id },
         });
     }
 

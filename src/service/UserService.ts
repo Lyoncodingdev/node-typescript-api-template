@@ -25,8 +25,8 @@ export class UserService {
      * @param email The email for the user.
      * @returns User with the correspoinding email.
      */
-    async getUserByEmail(email: string): Promise<UserRequest> {
-        var user = await this.userRepo.findByEmail(email);
+    async findUserById(id: string): Promise<UserRequest> {
+        var user = await this.userRepo.findById(id);
         if (user){
             this.logger.info(`User found ${user.id}`);
             return UserRequest.fromUser(user);
