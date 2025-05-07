@@ -3,7 +3,7 @@ import { ILogger, LoggerToken } from '../util/ILogger';
 import { Inject, Service } from 'typedi';
 import { UserService } from '../service/UserService';
 import { UserRequest } from '../model/UserRequest';
-import { AuthMiddleware } from '../middlewear/AuthMiddlewear';
+import { AuthMiddleware } from '../middlewear/AuthMiddleware';
 
 @Service()
 @JsonController('/users')

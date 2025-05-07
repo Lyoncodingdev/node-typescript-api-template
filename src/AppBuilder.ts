@@ -11,7 +11,7 @@ import { DatabaseConnection } from './db/DatabaseConnection';
 import { ILogger, LoggerToken } from './util/ILogger';
 
 import { UserController } from './controller/UserController';
-import { AuthMiddleware } from './middlewear/AuthMiddlewear';
+import { AuthMiddleware } from './middlewear/AuthMiddleware';
 import { AuthService } from './service/AuthService';
 
 

@@ -10,7 +10,7 @@ export class AuthMiddleware implements ExpressMiddlewareInterface {
     constructor(@Inject(LoggerToken) private logger: ILogger) { }
 
     /**
-     * Middlewear for authentication. Requests have to be validated through here
+     * Middleware for authentication. Requests have to be validated through here
      * before they can go further.
      * @param request The request incoming.
      * @param response The response.
