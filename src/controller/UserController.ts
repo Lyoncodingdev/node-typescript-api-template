@@ -1,8 +1,9 @@
-import { JsonController, Get, Param, Post, Body, NotFoundError } from 'routing-controllers';
+import { JsonController, Get, Param, Post, Body, NotFoundError, UseBefore } from 'routing-controllers';
 import { ILogger, LoggerToken } from '../util/ILogger';
 import { Inject, Service } from 'typedi';
 import { UserService } from '../service/UserService';
 import { UserRequest } from '../model/UserRequest';
+import { AuthMiddleware } from '../middlewear/AuthMiddlewear';
 
 @Service()
 @JsonController('/users')
@@ -13,6 +14,7 @@ export class UserController {
     ) { }
 
     @Get('/:id')
+    @UseBefore(AuthMiddleware)
     async getUser(@Param('id') id: string) {
         this.logger.info("Request to get user by id.");
         const user = await this.userService.findUserById(id);

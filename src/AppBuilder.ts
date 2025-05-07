@@ -11,6 +11,8 @@ import { DatabaseConnection } from './db/DatabaseConnection';
 import { ILogger, LoggerToken } from './util/ILogger';
 
 import { UserController } from './controller/UserController';
+import { AuthMiddleware } from './middlewear/AuthMiddlewear';
+import { AuthService } from './service/AuthService';
 
 
 
@@ -41,6 +43,13 @@ export class AppBuilder {
         return this;
     }
 
+    public withAuth(): AppBuilder {
+        this.logger.info("Attaching auth to application.");
+        var auth = new AuthService(this.logger);
+        Container.set(AuthService, auth);
+        return this;
+    }
+
     /**
      * Adds middlewear to the app.
      * @returns this
@@ -60,6 +69,7 @@ export class AppBuilder {
             message: 'Too many requests, try again later',
         });
         this.server.use(limiter);
+
         // hide Express header
         this.server.disable('x-powered-by');
         return this;
@@ -74,6 +84,7 @@ export class AppBuilder {
         rcUseContainer(Container);
         useExpressServer(this.server, {
             controllers: [UserController],
+            middlewares: [AuthMiddleware],
         });
         return this;
     }

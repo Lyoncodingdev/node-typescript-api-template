@@ -52,9 +52,4 @@ describe('UserService', () => {
         expect(actualUser).toEqual(emptyUserDTO);
         expect(mockUserRepo.findById).toHaveBeenCalledWith("NoEmail");
     })
-
-    it('CreateValidUser', async () => {
-        var userDTO = new UserRequest("", "James", "White");
-        
-    })
 });

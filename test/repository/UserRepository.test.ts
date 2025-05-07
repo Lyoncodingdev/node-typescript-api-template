@@ -47,15 +47,10 @@ describe('UserRepository', () => {
     });
 
     it('should have proper mocks set up', () => {
-        // Check logger has all required methods
         expect(typeof repo['logger'].error).toBe('function');
         expect(typeof repo['logger'].info).toBe('function');
         expect(typeof repo['logger'].warning).toBe('function');
-        
-        // Check database connection has required methods
         expect(typeof repo['dbConnection'].getConnection).toBe('function');
-        
-        // Check the connection returns the expected mock
         const connection = repo['dbConnection'].getConnection();
         expect(connection).toBe(mockPrisma);
     });
