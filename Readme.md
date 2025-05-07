@@ -14,19 +14,23 @@ Adding the following features
 
 # Setup
 ### Prerequisites
+- node
 - yarn
 
 ### Starting
-- clone repository
-- ```yarn install```
-- Create a .env file
-- Add necessary variables - see section below.
-- Start server ```yarn start```
+1. clone repository
+2. ```yarn install```
+3. Create a .env file in base of the project
+4. Add environment variables - see section below.
+5. ```yarn build```
+6. ```npx prisma db push```
+7. Start server ```yarn start```
 
 ### Environment Variables
 - **Required**
 - DATABASE_URL={your connection string}
 - PORT={your desired port}
+- FIREBASE_SERVICE_ACCOUNT_PATH={path to your firebase-auth.json file}
 
 ### Database Models
 - Add model definitions to schema.prisma
