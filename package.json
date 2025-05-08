@@ -5,7 +5,7 @@
   "main": "src/app.ts",
   "scripts": {
     "build": "npx prisma generate && npx tsc",
-    "start": "npx prisma generate && yarn run build && yarn node dist/src/app.js",
+    "start": "yarn run build && yarn node dist/app.js",
     "lint": "eslint . --ext .ts",
     "test": "jest",
     "clean": "rm -rf dist && rm -rf generated && rm -rf node_modules",
