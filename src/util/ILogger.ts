@@ -1,4 +1,5 @@
 import { Token } from 'typedi';
+
 export interface ILogger {
     info(message: string): void;
     warning(message: string): void;
