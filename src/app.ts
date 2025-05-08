@@ -39,8 +39,7 @@ const app = new AppBuilder()
     .withLogger(new ConsoleLogger)
     .withMiddleware()
     .withDatabase()
-    .withUserRepository()
-    .withUserService()
+    .withAuth()
     .withController()
     .build();
 

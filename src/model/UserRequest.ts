@@ -1,13 +1,22 @@
 import { User } from "../../generated/prisma";
 
 export class UserRequest {
-    id: number;
+    id: string;
     email: string;
     name?: string;
-    constructor(id: number, email: string, name?: string) {
+    constructor(id: string, email: string, name?: string) {
         this.id = id;
         this.email = email;
         this.name = name;
+    }
+
+    public toUser(): User {
+        let userForm: User = {
+            "id": this.id,
+            "name": this.name,
+            "email": this.email,
+        };
+        return userForm;
     }
 
     public static fromUser(user: User): UserRequest {
@@ -15,6 +24,6 @@ export class UserRequest {
     }
 
     public static emptyUser(){
-        return new UserRequest(-1, "", "");
+        return new UserRequest("", "", "");
     }
 };
