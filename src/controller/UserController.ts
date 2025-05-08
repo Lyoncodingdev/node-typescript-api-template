@@ -3,11 +3,11 @@ import { ILogger, LoggerToken } from '../util/ILogger';
 import { Inject, Service } from 'typedi';
 import { UserService } from '../service/UserService';
 import { UserRequest } from '../model/UserRequest';
-import { AuthMiddleware } from '../middlewear/AuthMiddleware';
-import { LoggingMiddleware } from '../middlewear/LoggingMiddleware';
+import { Authenticated } from '../util/decorator/AuthenticateDecorator';
+import { LogRequests } from '../util/decorator/LoggingDecorator';
 
 @Service()
-@UseBefore(LoggingMiddleware)
+@LogRequests()
 @JsonController('/users')
 export class UserController {
     constructor(
@@ -16,7 +16,7 @@ export class UserController {
     ) { }
 
     @Get('/:id')
-    @UseBefore(AuthMiddleware)
+    @Authenticated()
     async getUser(@Param('id') id: string) {
         this.logger.info("Request to get user by id.");
         const user = await this.userService.findUserById(id);
@@ -30,7 +30,7 @@ export class UserController {
     }
 
     @Post('/')
-    @UseBefore(AuthMiddleware)
+    @Authenticated()
     async createUser(@Body() userData: UserRequest) {
         this.logger.info("Request to create user.");
         try {
