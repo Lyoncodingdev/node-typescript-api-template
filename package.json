@@ -4,7 +4,7 @@
   "description": "template for node typescript api.",
   "main": "src/app.ts",
   "scripts": {
-    "prebuild": "node scripts/generate-env.tsx",
+    "prebuild": "node src/util/scripts/generate-env.mjs",
     "build": "npx prisma generate && npx tsc",
     "start": "yarn node dist/src/app.js",
     "lint": "eslint . --ext .ts",
