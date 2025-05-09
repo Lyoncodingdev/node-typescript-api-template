@@ -4,8 +4,10 @@ import { Inject, Service } from 'typedi';
 import { UserService } from '../service/UserService';
 import { UserRequest } from '../model/UserRequest';
 import { AuthMiddleware } from '../middlewear/AuthMiddleware';
+import { LoggingMiddleware } from '../middlewear/LoggingMiddleware';
 
 @Service()
+@UseBefore(LoggingMiddleware)
 @JsonController('/users')
 export class UserController {
     constructor(
@@ -28,6 +30,7 @@ export class UserController {
     }
 
     @Post('/')
+    @UseBefore(AuthMiddleware)
     async createUser(@Body() userData: UserRequest) {
         this.logger.info("Request to create user.");
         try {

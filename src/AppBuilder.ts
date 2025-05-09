@@ -13,6 +13,7 @@ import { ILogger, LoggerToken } from './util/ILogger';
 import { UserController } from './controller/UserController';
 import { AuthMiddleware } from './middlewear/AuthMiddleware';
 import { AuthService } from './service/AuthService';
+import { LoggingMiddleware } from './middlewear/LoggingMiddleware';
 
 
 
@@ -84,7 +85,7 @@ export class AppBuilder {
         rcUseContainer(Container);
         useExpressServer(this.server, {
             controllers: [UserController],
-            middlewares: [AuthMiddleware],
+            middlewares: [LoggingMiddleware, AuthMiddleware],
         });
         return this;
     }
