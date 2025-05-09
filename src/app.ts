@@ -2,6 +2,9 @@ import { Express } from 'express';
 import { ILogger } from './util/ILogger';
 import { ConsoleLogger } from './util/ConsoleLogger';
 import { AppBuilder } from './AppBuilder';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 /**
  * Interface to define app functionality.
@@ -27,7 +30,7 @@ export class App implements IApp {
      * Function for starting the app.
      */
     public start(): void {
-        const port = 3002;
+        const port = process.env.SERVER_PORT;
         this.server.listen(port, () => {
             this.logger.info(`Express is listening at http://localhost:${port}`);
         });
