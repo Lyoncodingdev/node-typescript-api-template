@@ -3,7 +3,9 @@ import { ILogger, LoggerToken } from '../util/ILogger';
 import { Inject } from 'typedi';
 import * as admin from 'firebase-admin';
 import * as path from 'path';
+import dotenv from 'dotenv';
 
+dotenv.config();
 /**
  * Service for interacting with
  */
@@ -28,7 +30,7 @@ export class AuthService {
                 }
 
                 else {
-                    const serviceAccountPath = path.join(__dirname, '../../firebase-auth-file.json');
+                    const serviceAccountPath = path.join(__dirname, process.env.FIREBASE_SERVICE_ACCOUNT_PATH);
                     const serviceAccount = require(serviceAccountPath);
 
                     admin.initializeApp({
